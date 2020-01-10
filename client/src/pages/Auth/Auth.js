@@ -12,8 +12,8 @@ class Auth extends Component {
         username: "",
         password: "",
         confirmPassword: "",
-        user: null,
-        message: ""
+        type: "",
+        message: "Welcome to Biller Pro"
     }
 
     handleInputChange = event => {
@@ -28,12 +28,13 @@ class Auth extends Component {
         event.preventDefault();
     }
 
-    handleLogin = event => {
+    handleDocLogin = event => {
         event.preventDefault();
         if (this.state.username && this.state.password) {
-            API.login({
+            API.docLogin({
                 username: this.state.username,
-                password: this.state.password
+                password: this.state.password,
+                type: this.state.type
             }).then(user => {
                 console.log(user);
                 if (user.data.loggedIn) {
@@ -42,7 +43,7 @@ class Auth extends Component {
                         user: user.data.user
                     });
                     console.log("log in successful");
-                    window.location.href = "/profile";
+                    window.location.href = "./doctorpage";
                 }
                 else if (user.data.message) {
                     this.setState({
@@ -53,20 +54,47 @@ class Auth extends Component {
         }
     }
 
-    handleSignup = event => {
+    handleActLogin = event => {
+        event.preventDefault();
+        if (this.state.username && this.state.password ) {
+            API.actLogin({
+                username: this.state.username,
+                password: this.state.password,
+                // type: this.state.type
+            }).then(user => {
+                console.log(user);
+                if (user.data.loggedIn) {
+                    this.setState({
+                        loggedIn: true,
+                        user: user.data.user
+                    });
+                    console.log("log in successful");
+                    window.location.href = "./accountpage";
+                }
+                else if (user.data.message) {
+                    this.setState({
+                        message: user.data.message
+                    })
+                }
+            });
+        }
+    }
+
+    handleDocSignup = event => {
         event.preventDefault();
         if (this.state.username && this.state.password) {
-            API.signup({
+            API.docSignup({
                 username: this.state.username,
-                password: this.state.password
+                password: this.state.password,
+                type: this.state.type.doctor
             }).then(user => {
                 if(user.date.loggIn) {
                     this.setState({
                         loggedIn: true,
                         user: user.data.user
                     });
-                    console.log("login successful");
-                    window.location.href = "/UserInfo";
+                    console.log("doctor login successful");
+                    window.location.href = "./DoctorPage";
                 } else {
                     console.log("error")
                     console.log(user.data);
@@ -77,6 +105,33 @@ class Auth extends Component {
             });
         }
     }
+
+    handleActSignup = event => {
+        event.preventDefault();
+        if (this.state.username && this.state.password) {
+            API.docSignup({
+                username: this.state.username,
+                password: this.state.password,
+                type: this.state.type
+            }).then(user => {
+                if(user.date.loggIn) {
+                    this.setState({
+                        loggedIn: true,
+                        user: user.data.user
+                    });
+                    console.log("accountant login successful");
+                    window.location.href = "./AccountPage";
+                } else {
+                    console.log("error")
+                    console.log(user.data);
+                    this.setState({
+                        message: user.data
+                    })
+                }
+            });
+        }
+    }
+
     handleInfoSubmit = event => {
         event.preventDefault();
         if(this.state.bodyType && this.state.goals) {
@@ -91,7 +146,8 @@ class Auth extends Component {
                     <Login
                     username={this.state.username}
                     password={this.state.password}
-                    handleLogin={this.handleLogin}
+                    handleDocLogin={this.handleDocLogin}
+                    handleActLogin={this.handleActLogin}
                     handleInputChange={this.handleInputChange}
                     message={this.state.message}
                     />
@@ -99,8 +155,9 @@ class Auth extends Component {
                     <SignUp
                     username={this.state.username}
                     handleUserInfo={this.state.handleUserInfo}
-                    confirmPassword={this.state.confirmPasswor}
-                    handleSignup={this.handleSignup}
+                    confirmPassword={this.state.confirmPassword}
+                    handleDocSignup={this.handleDocSignup}
+                    handleActSignup={this.handleActSignup}
                     handleInputChange={this.handleInputChange}
                     message={this.state.message}
                     />
@@ -108,7 +165,7 @@ class Auth extends Component {
                     username={this.state.username}
                     handleUserInfo={this.state.handleUserInfo}
                     doctor={this.state.doctor}
-                    accounting={this.state.accounting}
+                    accountant={this.state.accountant}
                 />
 
                 }

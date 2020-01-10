@@ -14,6 +14,8 @@ import {
     DropdownMenu,
     DropdownItem,
 } from 'reactstrap';
+// import PatInput from "../PatInput";
+
 
 export default class Navigation extends Component {
 
@@ -27,16 +29,36 @@ export default class Navigation extends Component {
     }
 
     componentDidMount() {
-        API.isLoggedIn().then(user => {
-            if (user.data.loggedIn) {
+        API.isDocLoggedIn().then(user => {
+            if (user.data.type.loggedIn) {
                 this.setState({
                     loggedIn: true
                 });
             }
         }).catch(err => {
             console.log(err);
-        });
+        }) &&
+
+        API.isAccountLoggedIn().then(user => {
+            if (user.data.type.loggedIn) {
+                this.setState({
+                    loggedIn: true
+                })
+            }
+        })
     }
+
+    // componentDidMount() {
+    //     API.isAccountLoggedIn().then(user => {
+    //         if(user.data.loggedIn) {
+    //             this.setState({
+    //                 loggedIn: true
+    //             });
+    //         }
+    //     }).catch(err => {
+    //         console.log(err);
+    //     });
+    // }
 
     logout() {
         API.logout().then((data)=> {
@@ -54,9 +76,9 @@ export default class Navigation extends Component {
 
     render() {
         return (
-            <div>
+            <div className="topnav">
                 <Navbar className="navbar" light expand="md">
-                    <NavbarBrand href="/" className="titleFont"><i className="fa fa-balance-scale light-text"></i>Doctor Pro-Biller</NavbarBrand>
+                    <NavbarBrand href="/" className="titleFont"><i className="fa fa-balance-scale"></i><strong>Doctor Pro-Biller</strong></NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
@@ -71,7 +93,7 @@ export default class Navigation extends Component {
                                     {this.state.loggedIn ? (
                                         <>
                                             <DropdownItem>
-                                                <NavLink href="/profile">Profile</NavLink>
+                                                <NavLink href="/">Profile</NavLink>
                                             </DropdownItem>
                                             <DropdownItem>
                                                 <NavLink onClick={this.logout}>Logout</NavLink>
@@ -80,10 +102,13 @@ export default class Navigation extends Component {
                                     ) : (
                                         <>
                                             <DropdownItem>
-                                                <NavLink href="/login">login</NavLink>
+                                                <NavLink href="/login">Doctor Login</NavLink>
                                             </DropdownItem>
                                             <DropdownItem>
-                                                <NavLink href="/signup">signup</NavLink>
+                                                <NavLink href="/login">Accountant Login</NavLink>
+                                            </DropdownItem>
+                                            <DropdownItem>
+                                                <NavLink href="/signup">Signup</NavLink>
                                             </DropdownItem>
                                         </>
                                     )}

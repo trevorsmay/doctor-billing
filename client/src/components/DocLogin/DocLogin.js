@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input, Alert, Container } from 'reactst
 import { Link } from "react-router-dom";
 import "./style.css";
 
-function Login(props) {
+function DocLogin(props) {
     return (
         <Container>
         <div className="loginBox">
@@ -30,7 +30,7 @@ function Login(props) {
 
         </Input>
       </FormGroup> */}
-                <Button id="loginBtn" onClick={props.handleActLogin} block>Login</Button>
+                <Button id="loginBtn" onClick={props.handleDocLogin} block>Login</Button>
                 <p className="signupLink">
                     <Link to="/signup">Don't have an account?  Sign up here</Link>
                 </p>
@@ -40,4 +40,4 @@ function Login(props) {
     );
 }
 
-export default Login;
+export default DocLogin;
