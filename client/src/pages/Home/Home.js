@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Button, Container } from "reactstrap";
+import { Container } from "reactstrap";
 import "./style.css";
 import API from "../../utils/API";
 // import { compareAsc } from "date-fns";
 import TopNav from "../../components/TopNav";
 import Banner from "../../components/Banner";
 import ProfileBox from "../../components/ProfileBox";
-import Login from "../../components/Login";
+import Auth from "../Auth";
 
 class Home extends Component {
     state = {
@@ -15,21 +15,25 @@ class Home extends Component {
     };
 
     componentDidMount() {
-        this.loggedIn();
+        this.docLoggedIn();
+        this.accountLoggedIn();
     }
 
-    loggedIn = () => {
+    docLoggedIn = () => {
         API.isDocLoggedIn().then(user => {
-            if (user.data.loggedIn) {
+            if(user.data.docLoggedIn) {
                 this.setState({
-                    loggedIn: true 
-                });
+                    docLoggedIn: true
+                })
             }
-            })
+        })
+    }
+
+    accountLoggedIn = () => {
         API.isAccountLoggedIn().then(user => {
-            if(user.data.loggedIn) {
+            if(user.data.accountLoggedIn) {
                 this.setState({
-                    loggedIn: true
+                    accountLoggedIn: true
                 })
             }
         }).catch(err => {
@@ -45,6 +49,7 @@ class Home extends Component {
                 <TopNav />
                 <Container>
                 <Banner />
+                <Auth />
                 <ProfileBox />
                 </Container>
             </div>

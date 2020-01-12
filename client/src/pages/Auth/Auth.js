@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Login from "../../components/Login";
+import DocLogin from "../../components/DocLogin";
 import SignUp from "../../components/Signup";
-import UserInfo from "../../components/UserInfo";
 import API from "../../utils/API";
 import "./Auth.css";
+
 
 class Auth extends Component {
 
@@ -12,8 +13,8 @@ class Auth extends Component {
         username: "",
         password: "",
         confirmPassword: "",
-        type: "",
-        message: "Welcome to Biller Pro"
+        userType: false,
+        message: ""
     }
 
     handleInputChange = event => {
@@ -34,16 +35,17 @@ class Auth extends Component {
             API.docLogin({
                 username: this.state.username,
                 password: this.state.password,
-                type: this.state.type
+                userType: this.state.userType
             }).then(user => {
                 console.log(user);
-                if (user.data.loggedIn) {
+                if (user.data.docLoggedIn) {
                     this.setState({
-                        loggedIn: true,
-                        user: user.data.user
+                        docLoggedIn: true,
+                        user: user.data.user,
+                        userType: true
                     });
-                    console.log("log in successful");
-                    window.location.href = "./doctorpage";
+                    console.log("login successful");
+                    window.location.href = "/doctorpage";
                 }
                 else if (user.data.message) {
                     this.setState({
@@ -60,16 +62,17 @@ class Auth extends Component {
             API.actLogin({
                 username: this.state.username,
                 password: this.state.password,
-                // type: this.state.type
+                userType: this.state.userType
             }).then(user => {
                 console.log(user);
-                if (user.data.loggedIn) {
+                if (user.data.accountLoggedIn) {
                     this.setState({
-                        loggedIn: true,
-                        user: user.data.user
+                        accountLoggedIn: true,
+                        user: user.data.user,
+                        userType: false
                     });
                     console.log("log in successful");
-                    window.location.href = "./accountpage";
+                    window.location.href = "/accountpage";
                 }
                 else if (user.data.message) {
                     this.setState({
@@ -86,15 +89,16 @@ class Auth extends Component {
             API.docSignup({
                 username: this.state.username,
                 password: this.state.password,
-                type: this.state.type.doctor
+                userType: this.state.userType
             }).then(user => {
-                if(user.date.loggIn) {
+                if(user.date.docLoggedIn) {
                     this.setState({
-                        loggedIn: true,
-                        user: user.data.user
+                        docLoggedIn: true,
+                        user: user.data.user,
+                        userType: true
                     });
                     console.log("doctor login successful");
-                    window.location.href = "./DoctorPage";
+                    window.location.href = "/doctorpage";
                 } else {
                     console.log("error")
                     console.log(user.data);
@@ -112,15 +116,16 @@ class Auth extends Component {
             API.docSignup({
                 username: this.state.username,
                 password: this.state.password,
-                type: this.state.type
+                userType: this.state.userType
             }).then(user => {
-                if(user.date.loggIn) {
+                if(user.date.accountLoggedIn) {
                     this.setState({
-                        loggedIn: true,
-                        user: user.data.user
+                        accountLoggedIn: true,
+                        user: user.data.user,
+                        userType: false
                     });
                     console.log("accountant login successful");
-                    window.location.href = "./AccountPage";
+                    window.location.href = "/accountpage";
                 } else {
                     console.log("error")
                     console.log(user.data);
@@ -132,12 +137,12 @@ class Auth extends Component {
         }
     }
 
-    handleInfoSubmit = event => {
-        event.preventDefault();
-        if(this.state.bodyType && this.state.goals) {
+    // handleInfoSubmit = event => {
+    //     event.preventDefault();
+    //     if(this.state.bodyType && this.state.goals) {
 
-        }
-    }
+    //     }
+    // }
 
     render() {
         return (
@@ -146,13 +151,19 @@ class Auth extends Component {
                     <Login
                     username={this.state.username}
                     password={this.state.password}
-                    handleDocLogin={this.handleDocLogin}
                     handleActLogin={this.handleActLogin}
                     handleInputChange={this.handleInputChange}
                     message={this.state.message}
                     />
-                ) : (this.props.action === "signup") ? (
-                    <SignUp
+                ) : (this.props.action === "doclogin") ? (
+                    <DocLogin
+                    username={this.state.username}
+                    password={this.state.password}
+                    handleDocLogin={this.handleDocLogin}
+                    handleInputChange={this.handleInputChange}
+                    message={this.state.message}
+                    />
+                ) :  <SignUp
                     username={this.state.username}
                     handleUserInfo={this.state.handleUserInfo}
                     confirmPassword={this.state.confirmPassword}
@@ -161,17 +172,12 @@ class Auth extends Component {
                     handleInputChange={this.handleInputChange}
                     message={this.state.message}
                     />
-                ): <UserInfo
-                    username={this.state.username}
-                    handleUserInfo={this.state.handleUserInfo}
-                    doctor={this.state.doctor}
-                    accountant={this.state.accountant}
-                />
-
+            
                 }
             </div>
-        )
+        );
     }
+        
 }
 
 export default Auth;

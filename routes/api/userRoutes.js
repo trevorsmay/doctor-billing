@@ -10,10 +10,9 @@ router.post("/doclogin", passport.authenticate("local", {
 }), function(req, res, next) {
     res.json({
         user:req.user,
-        loggedIn: true
+        docLoggedIn: true
     });
 });
-
 
 //accountant login
 router.post("/login", passport.authenticate("local", {
@@ -22,10 +21,23 @@ router.post("/login", passport.authenticate("local", {
 }), function(req, res, next) {
     res.json({
         user:req.user,
-        loggedIn: true
+        accountLoggedIn: true
     });
 });
 
+router.get("/dpage", authMiddleware.isDocLoggedIn, function(req, res, next) {
+    res.json({
+        user: req.user,
+        docLoggedIn: true
+    });
+});
+
+router.get("/apage", authMiddleware.isAccountantLoggedIn, function(req, res, next) {
+    res.json({
+        user: req.user,
+        accountLoggedIn: true
+    });
+});
 
 //sign up for this service doctor
 router.post("/docsignup", function(req, res, next) {
@@ -38,14 +50,14 @@ if (!user) {
     let newUser = new db.User({
         username: req.body.username,
         password: req.body.password,
-        type: req.body.type
+        userType: req.body.userType
     })
     newUser.password = newUser.generateHash(req.body.password);
     newUser.save(function(err) {
         if (err) throw err;
         console.log("new user saved!"); 
 
-        res.redirect(307, "/api/users/doctorpage")
+        res.redirect(307, "/api/users/dpage")
     });
 }
     })
@@ -62,14 +74,14 @@ if (!user) {
     let newUser = new db.User({
         username: req.body.username,
         password: req.body.password,
-        type: req.body.type
+        userType: req.body.userType
     })
     newUser.password = newUser.generateHash(req.body.password);
     newUser.save(function(err) {
         if (err) throw err;
         console.log("new user saved!"); 
 
-        res.redirect(307, "/api/users/accountpage")
+        res.redirect(307, "/api/users/apage")
     });
 }
     })
@@ -82,7 +94,7 @@ router.get("/unathorized", function(req, res, next) {
     setTimeout(function() {
         res.json({
             message:message,
-            loggedIn: false
+            docLoggedIn: false
         });
     }, 100);
 });
@@ -101,18 +113,20 @@ router.get("/logout", authMiddleware.logoutUser, function(req, res, next) {
   });
 
 //gets doctor page?
-router.get("/docpage", authMiddleware.isDoctor, function(req, res, next) {
+router.get("/dpage", authMiddleware.isDoctor, function(req, res, next) {
       res.json({
           user: req.user,
-          loggedIn: true
+          docLoggedIn: true,
+          userType: "doctor"
       });
   });
 
 //gets accountant page?
-router.get("/accountpage", authMiddleware.isAccountant, function(req, res, next) {
+router.get("/apage", authMiddleware.isAccountant, function(req, res, next) {
       res.json({
           user: req.user,
-          loggedIn: true
+          accountLoggedIn: true,
+          userType: "accountant"
       });
   });
 

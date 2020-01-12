@@ -23,20 +23,29 @@ const auth = {
         }
     },
 
-    // checks to see if the user is authenticated, then checks if they are an admin
-    // if yes, move on, otherwise send to unauthorized route
-    isAdmin: (req, res, next)=> {
-        if (req.isAuthenticated()) {
-            console.log('user confirmed');
-            if(req.user.admin) {
-                console.log('Administer Confirmed');
+
+    isDoctor: (req,res,next)=> {
+        if(req.isAuthenticated()) {
+            console.log("doctor confirmed");
+            if(req.user.userType === true) {
                 next();
             } else {
-                console.log('you must be an administer to continue');
-                res.redirect('/api/users/unauthorized')
+                res.redirect("/api/users/unathorized");
             }
-        } else {
-            res.redirect('/api/users/unauthorized')
+        }
+    },
+    // checks to see if the user is authenticated, then checks if they are an admin
+    // if yes, move on, otherwise send to unauthorized route
+
+    
+    isAccount: (req,res,next)=> {
+        if(req.isAuthenticated()) {
+            console.log("account confirmed");
+            if(req.user.userType === false) {
+                next();
+            } else {
+                res.redirect("/api/users/unathorized");
+            }
         }
     }
 }

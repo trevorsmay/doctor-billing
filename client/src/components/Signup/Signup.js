@@ -7,14 +7,12 @@ class Signup extends Component {
         validUsername: false,
         validPassword: false,
         confirmPassword: false,
-        confirmType: false
     }
     
     componentDidUpdate() {
         this.validatePassword();
         this.confirmPassword();
         this.validateUsername();
-        this.confirmType();
     }
 
     validateUsername() {
@@ -32,15 +30,15 @@ class Signup extends Component {
 
 
     // This method will create a profile with permissions that are based on the role they select.
-    confirmType() {
-        // let typeDoc = getElementByType("doctor");
-        // let typeAct = getElementByType("accountant");
-        // let typeSelect = getElementById("roleSelect");
+    // confirmType() {
+    //     // let typeDoc = getElementByType("doctor");
+    //     // let typeAct = getElementByType("accountant");
+    //     // let typeSelect = getElementById("roleSelect");
 
-        // if (typeSelect === typeDoc) {
+    //     // if (typeSelect === typeDoc) {
 
-        // }
-    }
+    //     // }
+    // }
 
 
     validatePassword() {

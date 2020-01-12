@@ -3,12 +3,12 @@ import axios from "axios";
 
 export  default  {
   // logs in doctor
-  docLogin: function(loginInfo) {
-    return axios.post("/api/users/doctorpage", loginInfo);
+  docLogin: function(docLoginInfo) {
+    return axios.get("/api/users/dpage", docLoginInfo);
   },
-  //logs in accountant
-  actLogin: function(loginInfo) {
-    return axios.post("/api/users/accountpage", loginInfo);
+  // logs in accountant
+  actLogin: function(actLoginInfo) {
+    return axios.get("/api/users/apage", actLoginInfo);
   },
   // signs up doctor, then logs them in
   docSignup: function(signupInfo) {
@@ -20,11 +20,11 @@ export  default  {
   },
   // checks to see if doc user is logged in, then returns the user
   isDocLoggedIn: function() {
-    return axios.get("/api/users/doctorpage");
+    return axios.get("/api/users/dpage");
   },
 // checks to see if accountant is logged in
   isAccountLoggedIn: function() {
-      return axios.get("/api/users/accountpage");
+      return axios.get("/api/users/acpage");
   },
 
   //saves user workouts to mongo

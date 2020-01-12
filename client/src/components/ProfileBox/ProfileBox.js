@@ -11,7 +11,7 @@ const ProfileBox = (props) => {
                 <Card body className="body">
           <CardTitle>Doctors Sign in Here</CardTitle>
           <CardText>Sign in to add patient information</CardText>
-          <Button href="/login">Enter</Button>
+          <Button href="/doclogin">Enter</Button>
         </Card>
                 </Col>
                 <Col sm="6">

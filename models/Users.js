@@ -19,26 +19,15 @@ const usersSchema = new Schema({
     },
     required: [true, "password is required"]
   },
-  admin: {
-    type: Boolean,
-    unique: false,
-    required: true,
-    default: false
-  },
   createdAt: {
     type: Date,
     default: Date.now()
   },
-  id:{
-    type: Number,
-    default: null,
-    required: false,
-    unique: false
-  },
-  quantity: {
-    type: Number,
-    default: null
+  userType: {
+    type: Boolean
   }
+
+  
 });
 
 usersSchema.methods.generateHash = function (password) {

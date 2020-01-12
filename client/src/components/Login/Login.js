@@ -3,8 +3,10 @@ import { Button, Form, FormGroup, Label, Input, Alert, Container } from 'reactst
 import { Link } from "react-router-dom";
 import "./style.css";
 
+
 function Login(props) {
-    return (
+
+        return(
         <Container>
         <div className="loginBox">
             <h2 className="loginTitle title-font">Login</h2>
@@ -19,7 +21,7 @@ function Login(props) {
                 </FormGroup>
                 <FormGroup>
                     <Label for="password">Password</Label>
-                    <Input type="password" name="password" id="password" placeholder="password" value={props.password} onChange={props.handleInputChange} />
+                    <Input type="password" current-password="current-password" name="password" id="password" placeholder="password" value={props.password} onChange={props.handleInputChange} />
                 </FormGroup>
                 {/* <FormGroup>
         <Label for="roleSelect">User Type</Label>
@@ -37,7 +39,8 @@ function Login(props) {
             </Form>
         </div>
         </Container>
-    );
+        )
 }
+
 
 export default Login;
