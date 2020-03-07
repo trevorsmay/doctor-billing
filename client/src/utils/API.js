@@ -1,52 +1,52 @@
 import axios from "axios";
 
 
+
 export  default  {
-  // logs in doctor
-  docLogin: function(docLoginInfo) {
-    return axios.get("/api/users/dpage", docLoginInfo);
-  },
-  // logs in accountant
-  actLogin: function(actLoginInfo) {
-    return axios.get("/api/users/apage", actLoginInfo);
-  },
-  // signs up doctor, then logs them in
-  docSignup: function(signupInfo) {
-    return axios.post("/api/users/auth", signupInfo);
-  },
+    // logs in user
+    login: function(loginInfo) {
+      return axios.post("/api/users/login", loginInfo);
+    },
+  
+    // signs up user, then logs them in
+    signup: function(signupInfo) {
+      return axios.post("/api/users/signup", signupInfo);
+    },
+  
+    // checks to see if user is logged in, then returns the user
+    isLoggedIn: function() {
+      return axios.get("/api/users/profile");
+    },
+  
+    // checks to see if the user is logged in and and admin, then returns the user
+    isAdmin: function() {
+      return axios.get("/api/users/logout")
+    },
 
-  actSignup: function(signupInfo) {
-    return axios.post("/api/users/auth", signupInfo);
-  },
-  // checks to see if doc user is logged in, then returns the user
-  isDocLoggedIn: function() {
-    return axios.get("/api/users/dpage");
-  },
-// checks to see if accountant is logged in
-  isAccountLoggedIn: function() {
-      return axios.get("/api/users/acpage");
-  },
-
-  //saves user workouts to mongo
-  updateProfile: function(userInfo){
-    return axios.put("/api/users/updateProfile", userInfo);
-  },
-
-  customerInfo: function(updatePatient){
-    return axios.put("/api/users/updatePatient", updatePatient);
-  },
-
-  retrieveInfo: function(patientInfo) {
-    return axios.get("/api/users/retrieveInfo", patientInfo);
-  },
-  // checks to see if the user is logged in and and admin, then returns the user
-//   isAdmin: function() {
-//     return axios.get("/api/users/logout")
-//   },
-  // logs out the user
-  logout: function() {
+    // logs out the user
+    logout: function() {
     return axios.get("/api/users/logout")
-  },
+    },
 
-};
+  // gets all patients
+    getPatients: function() {
+    return axios.get("/api/patient");
+    },
+
+  //gets all patients with the given id
+    getPatient: function(id) {
+    return axios.get("/api/patient/" + id);
+    },
+
+  //delets the patient with given ID
+    deletePatient: function(id) {
+    return axios.delete("/api/patient/" + id);
+    },
+
+  //saves a patient to the database
+    savePatient: function(patientData) {
+    return axios.post("/api/patient", patientData);
+    }
+
+    };
 

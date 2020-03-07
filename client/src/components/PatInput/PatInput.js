@@ -1,49 +1,64 @@
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText, Alert, Container } from 'reactstrap';
-// import { Link } from "react-router-dom";
+import {  Form, FormGroup, Label, Input, Alert, Container, Button, Col, Row, Jumbotron } from 'reactstrap';
+// import { Row, Col } from "react-bootstrap";
+import API from "../../utils/API";
+// import { Input, FormBtn } from "../Form";
+import { Link } from "react-router-dom";
 // import API from "../../utls/API";
+import DeleteBtn from "../DeleteBtn/index";
+import{ List, ListItem } from "../List/index";
 
 class PatInput extends Component {
     state = {
-        validCustomerNumber: false,
-        validCustomerName: false,
-        validDateOfBirth: false,
-        validTreatmentCode: false,
-        validServiceCost: false,
-        validBillStatus: false
-    }
+        patientId: [],
+        patientNumber: "",
+        serviceCost: "",
+        billStatus: ""
+    };
     
-    componentDidUpdate() {
-        this.validateCustomerInformation();
+    componentDidMount() {
+        this.loadPatients();
     }
 
-    validateCustomerInformation() {
-        if (this.props.customerNumber.length && this.props.customerName.length && this.state.dateBirth.length && this.state.treatmentCode.length && this.state.serviceCost.length && this.state.billStatus.length > 1) {
-            this.setState({
-                validCustomerNumber: true,
-                validCustomerName: true,
-                validDateOfBirth: true,
-                validTreatmentCode: true,
-                validServiceCost: true,
-                validBillStatus: true
-            });
+    loadPatients = () => {
+        API.getPatients()
+        .then(res => 
+            this.setState({ patientId: res.data, patientNumber: "", serviceCost: "", billStatus: ""})
+            )
+            .catch(err => console.log(err));
+    };
+
+    deletePatient = id => {
+        API.deletePatient(id) 
+        .then(res => this.loadPatients())
+        .catch(err => console.log(err));
+    };
+
+    handleInputChange = event => {
+        const { name , value} = event.target;
+        this.setState({
+            [name]: value
+        });
+    };
+
+    handleFormSubmit = event => {
+        event.preventDefault();
+        if (this.state.serviceCost && this.state.billStatus) {
+            API.savePatient({
+                patientNumber: this.state.patientNumber,
+                serviceCost: this.state.serviceCost,
+                billStatus: this.state.billStatus
+            })
+            .then(res => this.loadPatients())
+            .catch(err => console.log(err));
         }
-        if (this.props.customerNumber.length && this.props.customerName.length && this.state.dateBirth.length && this.state.treatmentCode.length && this.state.serviceCost.length && this.state.billStatus.length < 1) {
-            this.setState({
-                validCustomerNumber: false,
-                validCustomerName: false,
-                validDateOfBirth: false,
-                validTreatmentCode: false,
-                validServiceCost: false,
-                validBillStatus: false
-            });
-        }
-    }
+    };
 
     render() {
         return (
             <Container className="patient-container">
-            <div>
+                <Row>
+                    <Col xs="6">
                 <h2 className="loginTitle title-font">Enter Patient Information</h2>
                 <hr />
                 {this.props.message?(
@@ -51,43 +66,48 @@ class PatInput extends Component {
                 ): (<></>)}
                 <Form>
                     <FormGroup>
-                        <Label for="number">Customer Number</Label>
-                        <Input type="text" name="customerNumber" id="customerNumber" placeholder="Number" value={this.props.customerNumber} onChange={this.props.handleInputChange} valid={this.state.validCustomerNumber} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="name">Customer Name</Label>
-                        <Input type="text" name="customerName" id="customerName" placeholder="Name" value={this.props.customerName} onChange={this.props.handleInputChange} valid={this.state.validCustomerName} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="">Date of Birth</Label>
-                        <Input type="text" name="dateBirth" id="dob" placeholder="DOB" value={this.props.dateBirth} onChange={this.props.handleInputChange} valid={this.state.validDateOfBirth} />
-                        <FormText></FormText>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="">Treatment Code</Label>
-                        <Input type="text" name="treatmentCode" id="treatmentCode" placeholder="Treatment Code" value={this.props.treatmentCode} onChange={this.props.handleInputChange} valid={this.state.validTreatmentCode} />
+                        <Label for="number">Patient Number</Label>
+                        <Input type="text" name="patientNumber" id="customerNumber" placeholder="Number" value={this.state.patientNumber} onChange={this.handleInputChange} />
                     </FormGroup>
                     <FormGroup>
                         <Label for="">Total Cost of Service</Label>
-                        <Input type="text" name="serviceCost" id="serviceCost" placeholder="Service Cost" value={this.props.serviceCost} onChange={this.props.handleInputChange} valid={this.state.validServiceCost} />
+                        <Input type="text" name="serviceCost" id="serviceCost" placeholder="Service Cost" value={this.state.serviceCost} onChange={this.handleInputChange}  />
                     </FormGroup>
                     <FormGroup>
                         <Label for="">Bill Status</Label>
-                        <Input type="select" name="select" id="billStatus" placeholder="Treatment Code" value={this.props.billStatus} onChange={this.props.handleInputChange} valid={this.state.validBillStatus}>
-                            <option value="0">Select</option>
-                            <option value="1">Paid</option>
-                            <option value="2">Open</option>
-                            </Input>
+                        <Input type="select" name="billStatus" id="billStatus" placeholder="Treatment Code" value={this.state.billStatus} onChange={this.handleInputChange}>
+                            <option value="blank"></option>
+                            <option value="true">Paid</option>
+                            <option value="false">Open</option>
+                        </Input>
                     </FormGroup>
-                    {/* if all fields are valid, allow the user to submit the form */}
-                    {((this.state.validCustomerNumber && this.state.validUserName && this.state.validDateOfBirth && this.state.validTreatmentCode && this.state.validServiceCost && this.state.validBillStatus) !== false) ? (
-                        <Button onClick={this.props.handlePatInput} color="danger" block>Submit Information</Button>
-                    ) : (
-                        <Button onClick={this.props.handlePatInput} color="dark" block>Submit Information</Button>
-                    )}
-
+                    <Button value={!(this.state.serviceCost && this.state.billStatus)} onClick={this.handleFormSubmit}>
+                    Submit Information
+                    </Button>
                 </Form>
-            </div>
+                </Col>
+                <Col xs="6">
+                <Jumbotron>
+                <h1>Patients</h1>
+                </Jumbotron>
+                    {this.state.patientId.length ? (
+                        <List>
+                            {this.state.patientId.map(patient => (
+                                <ListItem key={patient._id}>
+                                <Link to={"/patient/" + patient._id}>
+                                    <strong>
+                                        {patient.patientNumber}, ${patient.serviceCost} and {patient.billStatus}
+                                    </strong>
+                                </Link>
+                                <DeleteBtn onClick={() => this.deletePatient(patient._id)} />
+                                </ListItem>
+                            ))}
+                        </List>
+                    ) : (
+                        <h3>No results</h3>
+                    )}
+                </Col>
+                </Row>
             </Container>
         );
     }

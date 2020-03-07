@@ -1,13 +1,9 @@
 import React from "react";
-import { Button, Form, FormGroup, Label, Input, Alert, Container } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import { Link } from "react-router-dom";
-import "./style.css";
-
 
 function Login(props) {
-
-        return(
-        <Container>
+    return (
         <div className="loginBox">
             <h2 className="loginTitle title-font">Login</h2>
             <hr/>
@@ -21,26 +17,15 @@ function Login(props) {
                 </FormGroup>
                 <FormGroup>
                     <Label for="password">Password</Label>
-                    <Input type="password" current-password="current-password" name="password" id="password" placeholder="password" value={props.password} onChange={props.handleInputChange} />
+                    <Input type="password" name="password" id="password" placeholder="password" value={props.password} onChange={props.handleInputChange} />
                 </FormGroup>
-                {/* <FormGroup>
-        <Label for="roleSelect">User Type</Label>
-        <Input type="select" name="select" id="roleSelect">
-          <option>Select</option>
-          <option type="text" name="doctor" value={props.type} onChange={props.handleDocLogin}>Doctor</option>
-          <option type="text" name="accountant" value={props.type} onChange={props.handleActLogin}>Accountant</option>
-
-        </Input>
-      </FormGroup> */}
-                <Button id="loginBtn" onClick={props.handleActLogin} block>Login</Button>
+                <Button id="loginBtn" onClick={props.handleLogin} block>Login</Button>
                 <p className="signupLink">
-                    <Link to="/signup">Don't have an account?  Sign up here</Link>
+                    <Link to="/signup">dont have an account?  Sign up here</Link>
                 </p>
             </Form>
         </div>
-        </Container>
-        )
+    );
 }
-
 
 export default Login;

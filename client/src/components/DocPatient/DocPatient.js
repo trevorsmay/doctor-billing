@@ -3,7 +3,7 @@ import "./style.css";
 import { Table, Container } from 'reactstrap';
 
 
-const DocPatient = (props) => {
+export function DocPatient(props){
   return (
     <>
     <Container className="service-box">

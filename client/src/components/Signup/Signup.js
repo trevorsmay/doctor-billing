@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText, Alert, Container } from 'reactstrap';
-// import { Link } from "react-router-dom";
+import { Button, Form, FormGroup, Label, Input, FormText, Alert } from 'reactstrap';
+import { Link } from "react-router-dom";
 
 class Signup extends Component {
     state = {
         validUsername: false,
         validPassword: false,
-        confirmPassword: false,
+        confirmPassword: false
     }
     
     componentDidUpdate() {
@@ -27,19 +27,6 @@ class Signup extends Component {
             });
         }
     }
-
-
-    // This method will create a profile with permissions that are based on the role they select.
-    // confirmType() {
-    //     // let typeDoc = getElementByType("doctor");
-    //     // let typeAct = getElementByType("accountant");
-    //     // let typeSelect = getElementById("roleSelect");
-
-    //     // if (typeSelect === typeDoc) {
-
-    //     // }
-    // }
-
 
     validatePassword() {
         let strongPassword = new RegExp(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/);
@@ -69,10 +56,8 @@ class Signup extends Component {
         }
     }
 
-
     render() {
         return (
-            <Container className="signup-container">
             <div>
                 <h2 className="loginTitle title-font">Signup</h2>
                 <hr />
@@ -91,29 +76,19 @@ class Signup extends Component {
                     <FormGroup>
                         <Label for="confirmPassword">Confirm Password</Label>
                         <Input type="password" name="confirmPassword" id="confirmPassword" placeholder="confirm password" value={this.props.confirmPassword} onChange={this.props.handleInputChange} valid={this.state.confirmPassword} />
-                        <FormText>At least 8 characters, 1 capital & 1 number</FormText>
+                        <FormText>at least 8 characters, 1 capital & 1 number</FormText>
                     </FormGroup>
-                    <FormGroup>
-        <Label for="roleSelect">User Type</Label>
-        <Input type="select" name="select" id="roleSelect">
-          <option>Select</option>
-          <option type="doctor">Doctor</option>
-          <option type="accountant">Accountant</option>
-
-        </Input>
-      </FormGroup>
                     {/* if all fields are valid, allow the user to submit the form */}
                     {(this.state.validUsername && this.state.validPassword && this.state.confirmPassword) ? (
                         <Button onClick={this.props.handleSignup} color="success" block>Signup</Button>
                     ) : (
-                        <Button onClick={this.props.handleSignup} color="danger" block>Signup</Button>
+                        <Button onClick={this.props.handleSignup} color="danger" block disabled>Signup</Button>
                     )}
-                    {/* <p className="signupLink">
-                        <Link to="/login">Already have an account?  Sign in here</Link>
-                    </p> */}
+                    <p className="signupLink">
+                        <Link to="/login">already have an account?  Sign in here</Link>
+                    </p>
                 </Form>
             </div>
-            </Container>
         );
     }
 }

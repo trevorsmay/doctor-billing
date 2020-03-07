@@ -2,13 +2,7 @@ import React from "react";
 import "./style.css";
 import { Footer } from "react-materialize";
 
-// function Footer() {
-//     return(
-//         <footer className="footer">
-//             <a id="biller" href="" target="blank"><i className="fa fa-balance-scale"></i></a>
-//         </footer>
-//     )
-// }
+
 export default () => ( 
 <div className="footer">
 <Footer
@@ -18,10 +12,10 @@ export default () => (
   className="appFooter"
 >
 <h5 className="white-text">
-Doctor Pro-Biller
+Doctor Ledger
 </h5>
 <p className="grey-text text-lighten-4">
-Simple biller 
+Bookkeeping, simpler.
 </p>
 </Footer>
 </div>
