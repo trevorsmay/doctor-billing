@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import {  Form, FormGroup, Label, Input, Alert, Container, Button, Col, Row, Jumbotron } from 'reactstrap';
+import {  FormGroup, Label, Alert, Container, Col, Row, Jumbotron } from 'reactstrap';
 // import { Row, Col } from "react-bootstrap";
 import API from "../../utils/API";
-// import { Input, FormBtn } from "../Form";
+import { Input, FormBtn } from "../Form/index";
 import { Link } from "react-router-dom";
-// import API from "../../utls/API";
 import DeleteBtn from "../DeleteBtn/index";
 import{ List, ListItem } from "../List/index";
 
@@ -64,14 +63,14 @@ class PatInput extends Component {
                 {this.props.message?(
                     <Alert className="animated fadeIn" color="danger">{this.props.message}</Alert>
                 ): (<></>)}
-                <Form>
+                <form>
                     <FormGroup>
                         <Label for="number">Patient Number</Label>
-                        <Input type="text" name="patientNumber" id="customerNumber" placeholder="Number" value={this.state.patientNumber} onChange={this.handleInputChange} />
+                        <Input name="patientNumber" id="customerNumber" placeholder="Number" value={this.state.patientNumber} onChange={this.handleInputChange} />
                     </FormGroup>
                     <FormGroup>
                         <Label for="">Total Cost of Service</Label>
-                        <Input type="text" name="serviceCost" id="serviceCost" placeholder="Service Cost" value={this.state.serviceCost} onChange={this.handleInputChange}  />
+                        <Input name="serviceCost" id="serviceCost" placeholder="Service Cost" value={this.state.serviceCost} onChange={this.handleInputChange}  />
                     </FormGroup>
                     <FormGroup>
                         <Label for="">Bill Status</Label>
@@ -81,10 +80,10 @@ class PatInput extends Component {
                             <option value="false">Open</option>
                         </Input>
                     </FormGroup>
-                    <Button value={!(this.state.serviceCost && this.state.billStatus)} onClick={this.handleFormSubmit}>
+                    <FormBtn disabled={!(this.state.serviceCost && this.state.billStatus)} onClick={this.handleFormSubmit}>
                     Submit Information
-                    </Button>
-                </Form>
+                    </FormBtn>
+                </form>
                 </Col>
                 <Col xs="6">
                 <Jumbotron>

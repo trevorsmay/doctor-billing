@@ -1,7 +1,5 @@
 import axios from "axios";
 
-
-
 export  default  {
     // logs in user
     login: function(loginInfo) {
@@ -46,7 +44,6 @@ export  default  {
   //saves a patient to the database
     savePatient: function(patientData) {
     return axios.post("/api/patient", patientData);
-    }
-
+    },
     };
 
