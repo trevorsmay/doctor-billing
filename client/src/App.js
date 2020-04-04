@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
@@ -8,7 +7,7 @@ import NoMatch from "./pages/NoMatch";
 import TopNav from "./components/TopNav";
 import Footer from "./components/Footer";
 import { Container } from 'reactstrap';
-import Header from "./components/Header";
+import Detail from "./pages/Detail";
 
 function App() {
   return (
@@ -21,14 +20,10 @@ function App() {
               <Route exact path="/signup" render={(props) => <Auth {...props} action="signup" />} />
               <Route exact path="/login" render={(props) => <Auth {...props} action="login" />} />
               <Route exact path="/profile" component={Profile} />
-              {/* <Route exact path="/doclogin" render={(props) => <Auth {...props} action="login" /> } /> */}
-              {/* <Route exact path="/dpage" component={DPage} render = {(props) => <DPage { ... props} /> } />
-              <Route exact path="/apage" component={APage} render = {(props) => <APage {...props} /> } /> */}
-              {/* <Route exact path = "/UserInfo" render = {(props) => <UserInfo {...props} />}/> */}
+              <Route exaxt path="/profile/:id" component= {Detail} />
               <Route component= {NoMatch} />
         </Switch>
         </Container>
-        <Header />
         <Footer />
       </>
     </Router>

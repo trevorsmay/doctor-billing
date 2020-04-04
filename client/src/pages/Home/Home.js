@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-// import { Button } from "reactstrap";
 import API from "../../utils/API";
 import "./style.css";
-// import Header from "../../components/Header";
-// import "./Home.scss";
+import Header from "../../components/Header";
+
 
 class Home extends Component {
 
@@ -31,8 +30,9 @@ class Home extends Component {
     return (
       <div className="homeBox">
         {this.state.loggedIn}
+        <Header />
       </div>
-
+    
 
     );
   }

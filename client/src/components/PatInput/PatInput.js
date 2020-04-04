@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {  FormGroup, Label, Alert, Container, Col, Row, Jumbotron } from 'reactstrap';
-// import { Row, Col } from "react-bootstrap";
 import API from "../../utils/API";
 import { Input, FormBtn } from "../Form/index";
 import { Link } from "react-router-dom";
@@ -42,11 +41,11 @@ class PatInput extends Component {
 
     handleFormSubmit = event => {
         event.preventDefault();
-        if (this.state.serviceCost && this.state.billStatus) {
+        if (this.state.patientNumber && this.state.serviceCost) {
             API.savePatient({
                 patientNumber: this.state.patientNumber,
                 serviceCost: this.state.serviceCost,
-                billStatus: this.state.billStatus
+                // billStatus: this.state.billStatus
             })
             .then(res => this.loadPatients())
             .catch(err => console.log(err));
@@ -74,13 +73,13 @@ class PatInput extends Component {
                     </FormGroup>
                     <FormGroup>
                         <Label for="">Bill Status</Label>
-                        <Input type="select" name="billStatus" id="billStatus" placeholder="Treatment Code" value={this.state.billStatus} onChange={this.handleInputChange}>
+                        {/* <SelectInput name="billStatus" id="billStatus" placeholder="Treatment Code" value={this.state.billStatus} onChange={this.handleInputChange}>
                             <option value="blank"></option>
                             <option value="true">Paid</option>
                             <option value="false">Open</option>
-                        </Input>
+                        </SelectInput> */}
                     </FormGroup>
-                    <FormBtn disabled={!(this.state.serviceCost && this.state.billStatus)} onClick={this.handleFormSubmit}>
+                    <FormBtn disabled={!(this.state.patientNumber && this.state.serviceCost)} onClick={this.handleFormSubmit}>
                     Submit Information
                     </FormBtn>
                 </form>
@@ -93,7 +92,7 @@ class PatInput extends Component {
                         <List>
                             {this.state.patientId.map(patient => (
                                 <ListItem key={patient._id}>
-                                <Link to={"/patient/" + patient._id}>
+                                <Link to={"/profile/" + patient._id }>
                                     <strong>
                                         {patient.patientNumber}, ${patient.serviceCost} and {patient.billStatus}
                                     </strong>

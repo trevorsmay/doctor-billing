@@ -1,11 +1,52 @@
-import React from 'react';
+import React, {Component} from 'react';
 import "./style.css";
+// import API from "../../utils/API";
 import { Table, Container } from 'reactstrap';
+import API from '../../utils/API';
 
 
-export function DocPatient(props){
+class  DocPatient extends Component {
+
+    state = {
+      qty: [],
+      fee: "",
+      total: ""
+    };
+
+    componentDidMount() {
+      this.loadProcedures();
+    };
+
+    loadProcedures = () => {
+      API.getProcedures()
+      .then(res =>
+        this.setState({ qty: [], fee: "", total: ""})
+        )
+        .catch(err => console.log(err));
+    };
+
+    handleInputChange = event => {
+      const { name , value } = event.target;
+      this.setState({
+        [name]: value
+      });
+    };
+
+    handleFormSubmit = event => {
+      event.preventDefault();
+      if (this.state.qty && this.state.total) {
+        API.saveProcedure({
+          qty: this.state.qty,
+          service: this.state.total
+        })
+        .then(res => this.loadProcedures())
+        .catch(err => console.log(err));
+      }
+    };
+
+render() {
   return (
-    <>
+   
     <Container className="service-box">
     <Table >
       <thead className="table-header">
@@ -572,10 +613,9 @@ export function DocPatient(props){
         </tbody>
     </Table>
     </Container>
-    </>
-  );
+    )
 }
-
+  }
 
 
 

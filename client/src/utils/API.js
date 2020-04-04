@@ -45,5 +45,21 @@ export  default  {
     savePatient: function(patientData) {
     return axios.post("/api/patient", patientData);
     },
+
+    getProcedures: function() {
+      return axios.get("/api/procedure");
+    },
+
+    getProcedure: function(id) {
+      return axios.get("/api/procedure/" + id);
+    },
+
+    deleteProcedure: function(id) {
+      return axios.delete("/api/procedure/" + id);
+    },
+
+    saveProcedure: function(procedureData) {
+      return axios.post("/api/procedure", procedureData)
+    }
     };
 
