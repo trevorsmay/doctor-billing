@@ -6,7 +6,7 @@ const patientSchema = new Schema({
     patientNumber: {
         type: Number,
         unique: true,
-        required: [true, "Patient ID is required."]
+        required: [true]
     },
     qty: {
         type: Number,

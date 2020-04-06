@@ -3,7 +3,7 @@ import "./style.css";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom"
 import API from "../../utils/API"
-import PatInput from "../../components/PatInput/PatInput";
+import Patients from "../../components/Patient/Patient";
 
 
 class Profile extends Component {
@@ -58,7 +58,7 @@ class Profile extends Component {
                         )}
                     </div> 
                 )}
-                <PatInput />
+                <Patients />
 
             </div>
         )

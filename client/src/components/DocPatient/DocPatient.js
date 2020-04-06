@@ -64,7 +64,7 @@ render() {
       <tbody>
         <tr>
           <th scope="row">PT Evaluation</th>
-          <td>97001</td>
+          <td value="97001">97001</td>
           <td>GP</td>
           <td><input placeholder="0"></input></td>
           <td></td>

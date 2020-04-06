@@ -6,12 +6,11 @@ import { Link } from "react-router-dom";
 import DeleteBtn from "../DeleteBtn/index";
 import{ List, ListItem } from "../List/index";
 
-class PatInput extends Component {
+class Patient extends Component {
     state = {
-        patientId: [],
+        patients: [],
         patientNumber: "",
         serviceCost: "",
-        billStatus: ""
     };
     
     componentDidMount() {
@@ -21,7 +20,7 @@ class PatInput extends Component {
     loadPatients = () => {
         API.getPatients()
         .then(res => 
-            this.setState({ patientId: res.data, patientNumber: "", serviceCost: "", billStatus: ""})
+            this.setState({ patients: res.data, patientNumber: "", serviceCost: "" })
             )
             .catch(err => console.log(err));
     };
@@ -45,7 +44,6 @@ class PatInput extends Component {
             API.savePatient({
                 patientNumber: this.state.patientNumber,
                 serviceCost: this.state.serviceCost,
-                // billStatus: this.state.billStatus
             })
             .then(res => this.loadPatients())
             .catch(err => console.log(err));
@@ -71,14 +69,6 @@ class PatInput extends Component {
                         <Label for="">Total Cost of Service</Label>
                         <Input name="serviceCost" id="serviceCost" placeholder="Service Cost" value={this.state.serviceCost} onChange={this.handleInputChange}  />
                     </FormGroup>
-                    <FormGroup>
-                        <Label for="">Bill Status</Label>
-                        {/* <SelectInput name="billStatus" id="billStatus" placeholder="Treatment Code" value={this.state.billStatus} onChange={this.handleInputChange}>
-                            <option value="blank"></option>
-                            <option value="true">Paid</option>
-                            <option value="false">Open</option>
-                        </SelectInput> */}
-                    </FormGroup>
                     <FormBtn disabled={!(this.state.patientNumber && this.state.serviceCost)} onClick={this.handleFormSubmit}>
                     Submit Information
                     </FormBtn>
@@ -88,13 +78,13 @@ class PatInput extends Component {
                 <Jumbotron>
                 <h1>Patients</h1>
                 </Jumbotron>
-                    {this.state.patientId.length ? (
+                    {this.state.patients.length ? (
                         <List>
-                            {this.state.patientId.map(patient => (
+                            {this.state.patients.map(patient => (
                                 <ListItem key={patient._id}>
                                 <Link to={"/profile/" + patient._id }>
                                     <strong>
-                                        {patient.patientNumber}, ${patient.serviceCost} and {patient.billStatus}
+                                        {patient.patientNumber}, ${patient.serviceCost}
                                     </strong>
                                 </Link>
                                 <DeleteBtn onClick={() => this.deletePatient(patient._id)} />
@@ -111,5 +101,4 @@ class PatInput extends Component {
     }
 }
 
-export default PatInput;
-
+export default Patient;

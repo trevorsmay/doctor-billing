@@ -32,8 +32,7 @@ class Detail extends Component {
           </Col>
         </Row>
         <Row>
-                <DocPatient />
-
+        <DocPatient />
           <Col size="md-2">
             <Link to="/profile">← Return to Profile</Link>
           </Col>
