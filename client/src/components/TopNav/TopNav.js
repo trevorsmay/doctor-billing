@@ -15,6 +15,8 @@ import {
     DropdownItem,
 } from 'reactstrap';
 
+
+
 export default class Navigation extends Component {
 
     constructor(props) {
@@ -55,37 +57,37 @@ export default class Navigation extends Component {
     render() {
         return (
             <div>
-                <Navbar className="navbar" light expand="md">
-                    <NavbarBrand href="/" className="titleFont"><i className="fas fa-key"></i> Doctor Biller</NavbarBrand>
+                <Navbar id="topNav" className="navbar" light expand="lg">
+                    <NavbarBrand  id="navName" href="/" className="titleFont"><i className="fas fa-file-invoice-dollar"></i>    Patient Tracker</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="/"><i className="fas fa-home light-text"></i></NavLink>
+                                <NavLink href="/"><i className="fas fa-home"></i></NavLink>
                             </NavItem>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
-                                    <i className="fas fa-user light-text"></i>
+                                <i className="fas fa-user-alt"></i>
                                 </DropdownToggle>
                                 <DropdownMenu right>
                                     {this.state.loggedIn ? (
-                                        <>
+                                        <div>
                                             <DropdownItem>
                                                 <NavLink href="/profile">Profile</NavLink>
                                             </DropdownItem>
                                             <DropdownItem>
                                                 <NavLink onClick={this.logout}>Logout</NavLink>
                                             </DropdownItem>
-                                        </>
+                                        </div>
                                     ) : (
-                                        <>
+                                        <div>
                                             <DropdownItem>
-                                                <NavLink href="/login">login</NavLink>
+                                                <NavLink href="/login">Login</NavLink>
                                             </DropdownItem>
                                             <DropdownItem>
-                                                <NavLink href="/signup">signup</NavLink>
+                                                <NavLink href="/signup">Signup</NavLink>
                                             </DropdownItem>
-                                        </>
+                                        </div>
                                     )}
                                 </DropdownMenu>
                             </UncontrolledDropdown>

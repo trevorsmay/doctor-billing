@@ -28,38 +28,43 @@ export  default  {
 
   // gets all patients
     getPatients: function() {
-    return axios.get("/api/patient");
+    return axios.get("/api/patients");
     },
 
   //gets all patients with the given id
     getPatient: function(id) {
-    return axios.get("/api/patient/" + id);
+    return axios.get("/api/patients/" + id);
     },
 
-  //delets the patient with given ID
+
+  //deletes the patient with given ID
     deletePatient: function(id) {
-    return axios.delete("/api/patient/" + id);
+    return axios.delete("/api/patients/" + id);
     },
 
   //saves a patient to the database
     savePatient: function(patientData) {
-    return axios.post("/api/patient", patientData);
+    return axios.post("/api/patients/", patientData);
     },
 
     getProcedures: function() {
-      return axios.get("/api/procedure");
+      return axios.get("/api/procedures");
     },
 
-    getProcedure: function(id) {
-      return axios.get("/api/procedure/" + id);
+    getProcedure: function(codeId) {
+      return axios.get("/api/procedures/" + codeId);
     },
 
-    deleteProcedure: function(id) {
-      return axios.delete("/api/procedure/" + id);
+    getFee: function(fee) {
+      return axios.get("/api/patients/" + fee);
+    },
+
+    deleteProcedure: function(codeId) {
+      return axios.delete("/api/procedures/" + codeId);
     },
 
     saveProcedure: function(procedureData) {
-      return axios.post("/api/procedure", procedureData)
+      return axios.post("/api/procedures/", procedureData)
     }
     };
 

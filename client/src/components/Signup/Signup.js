@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText, Alert } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText, Alert, Container } from 'reactstrap';
 import { Link } from "react-router-dom";
 
 class Signup extends Component {
@@ -58,12 +58,13 @@ class Signup extends Component {
 
     render() {
         return (
+            <Container>
             <div>
                 <h2 className="loginTitle title-font">Signup</h2>
                 <hr />
                 {this.props.message?(
                     <Alert className="animated fadeIn" color="danger">{this.props.message}</Alert>
-                ): (<></>)}
+                ): (<div></div>)}
                 <Form>
                     <FormGroup>
                         <Label for="username">Username</Label>
@@ -89,6 +90,7 @@ class Signup extends Component {
                     </p>
                 </Form>
             </div>
+            </Container>
         );
     }
 }

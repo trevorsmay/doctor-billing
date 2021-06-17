@@ -10,7 +10,7 @@ module.exports = {
     },
     findByID: function(req, res) {
         db.Procedure
-        .findById(req.params.id)
+        .findById(req.params.codeId)
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));
     },
@@ -22,13 +22,13 @@ module.exports = {
     },
     update: function(req, res) {
         db.Procedure
-        .findOneAndUpdate({ _id: req.params.id }, req.body)
+        .findOneAndUpdate({ _id: req.params.codeId }, req.body)
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));
     },
     remove: function(req, res) {
         db.Procedure
-        .findById({ _id: req.params.id })
+        .findById({ _codeId: req.params.codeid })
         .then(dbModel => dbModel.remove())
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));

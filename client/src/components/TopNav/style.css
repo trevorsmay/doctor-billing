@@ -7,6 +7,14 @@
     padding: 0px, 20px, 0px, 20px;
 }
 
-.topnav {
+/* .topnav {
     background-color: lightslategrey;
+} */
+
+#topNav {
+    font-size: 20px;
+}
+
+#navName {
+    font-size: 20px;
 }

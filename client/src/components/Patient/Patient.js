@@ -10,7 +10,6 @@ class Patient extends Component {
     state = {
         patients: [],
         patientNumber: "",
-        serviceCost: "",
     };
     
     componentDidMount() {
@@ -20,7 +19,7 @@ class Patient extends Component {
     loadPatients = () => {
         API.getPatients()
         .then(res => 
-            this.setState({ patients: res.data, patientNumber: "", serviceCost: "" })
+            this.setState({ patients: res.data, patientNumber: "" })
             )
             .catch(err => console.log(err));
     };
@@ -40,10 +39,9 @@ class Patient extends Component {
 
     handleFormSubmit = event => {
         event.preventDefault();
-        if (this.state.patientNumber && this.state.serviceCost) {
+        if (this.state.patientNumber) {
             API.savePatient({
                 patientNumber: this.state.patientNumber,
-                serviceCost: this.state.serviceCost,
             })
             .then(res => this.loadPatients())
             .catch(err => console.log(err));
@@ -52,29 +50,25 @@ class Patient extends Component {
 
     render() {
         return (
-            <Container className="patient-container">
+            <Container fluid>
                 <Row>
-                    <Col xs="6">
+                    <Col size="md-6">
                 <h2 className="loginTitle title-font">Enter Patient Information</h2>
                 <hr />
                 {this.props.message?(
                     <Alert className="animated fadeIn" color="danger">{this.props.message}</Alert>
-                ): (<></>)}
+                ): (<div></div>)}
                 <form>
                     <FormGroup>
                         <Label for="number">Patient Number</Label>
-                        <Input name="patientNumber" id="customerNumber" placeholder="Number" value={this.state.patientNumber} onChange={this.handleInputChange} />
+                        <Input value={this.state.patientNumber} onChange={this.handleInputChange}  name="patientNumber" placeholder="Number"  />
                     </FormGroup>
-                    <FormGroup>
-                        <Label for="">Total Cost of Service</Label>
-                        <Input name="serviceCost" id="serviceCost" placeholder="Service Cost" value={this.state.serviceCost} onChange={this.handleInputChange}  />
-                    </FormGroup>
-                    <FormBtn disabled={!(this.state.patientNumber && this.state.serviceCost)} onClick={this.handleFormSubmit}>
+                    <FormBtn disabled={!(this.state.patientNumber)} onClick={this.handleFormSubmit}>
                     Submit Information
                     </FormBtn>
                 </form>
                 </Col>
-                <Col xs="6">
+                <Col size="md-6 sm-12">
                 <Jumbotron>
                 <h1>Patients</h1>
                 </Jumbotron>
@@ -84,7 +78,7 @@ class Patient extends Component {
                                 <ListItem key={patient._id}>
                                 <Link to={"/profile/" + patient._id }>
                                     <strong>
-                                        {patient.patientNumber}, ${patient.serviceCost}
+                                        {patient.patientNumber}
                                     </strong>
                                 </Link>
                                 <DeleteBtn onClick={() => this.deletePatient(patient._id)} />

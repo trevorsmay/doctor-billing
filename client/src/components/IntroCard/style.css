@@ -1,0 +1,12 @@
+.button {
+    float: right;
+    margin-bottom: 10px;
+}
+
+.cards {
+    margin-top: 100px;
+} 
+
+.doctor-card {
+    color: gray;
+}

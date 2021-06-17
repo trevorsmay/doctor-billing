@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import "./style.css";
-import { Button } from "reactstrap";
+import { Button, Container } from "reactstrap";
 import { Link } from "react-router-dom"
 import API from "../../utils/API"
-import Patients from "../../components/Patient/Patient";
+import Patient from "../../components/Patient/Patient";
 
 
 class Profile extends Component {
@@ -36,11 +36,12 @@ class Profile extends Component {
             this.setState({
                 loading: false
             })
-        }, 1000)  
+        }, 100000)  
     }
 
     render() {
         return (
+            <Container>
             <div className="profilePage">
                 {this.state.loggedIn ? (
                     <div className="profileBox">
@@ -49,20 +50,25 @@ class Profile extends Component {
                 ) : (
                     <div className="noUser">
                         {!this.state.loading ? (
-                            <>
+                            <div>
                                 <h1>Please log in</h1>
                                 <Link className="loginLink" to="/login"><Button className="loginBtn" color="info" block>Login</Button></Link>
-                            </>
+                            </div>
                         ) : (
                             <img id="loadingIcon" src="./assets/images/loading.gif" alt="loading"/>
                         )}
                     </div> 
                 )}
-                <Patients />
-
+                
+                
             </div>
+            <Patient />
+            </Container>
+             
         )
+       
     }
+    
 }
 
 

@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import "./style.css";
 import Header from "../../components/Header";
+import IntroCard from "../../components/IntroCard";
+
+
 
 
 class Home extends Component {
@@ -31,9 +34,9 @@ class Home extends Component {
       <div className="homeBox">
         {this.state.loggedIn}
         <Header />
+        <IntroCard />
+  
       </div>
-    
-
     );
   }
 }

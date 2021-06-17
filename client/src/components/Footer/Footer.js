@@ -12,7 +12,7 @@ export default () => (
   className="appFooter"
 >
 <h5 className="white-text">
-Doctor Ledger
+The Patient Tracker 
 </h5>
 <p className="grey-text text-lighten-4">
 Bookkeeping, simpler.
